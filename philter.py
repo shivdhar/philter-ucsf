@@ -1,3 +1,4 @@
+import imp
 import re
 import warnings
 import json
@@ -14,7 +15,7 @@ import subprocess
 import numpy
 import random
 import string
-
+from pathlib import Path
 
 class Philter:
     """ 
@@ -780,7 +781,7 @@ class Philter:
             #keeps a record of all phi coordinates and text for a given file
             # data = {}
         
-            filename = root+f
+            filename = os.path.join(root,f)
 
             if filename.split(".")[-1] not in allowed_filetypes:
                 if self.verbose:
@@ -794,7 +795,7 @@ class Philter:
 
             #now we transform the text
             fbase, fext = os.path.splitext(f)
-            outpathfbase = out_path + fbase
+            outpathfbase = os.path.join(out_path, fbase)
             if self.outformat == "asterisk":
                 with open(outpathfbase+".txt", "w", encoding='utf-8', errors='surrogateescape') as f:
                     contents = self.transform_text_asterisk(txt, filename)
@@ -803,7 +804,7 @@ class Philter:
             elif self.outformat == "i2b2":
                 with open(outpathfbase+".xml", "w", errors='xmlcharrefreplace') as f: #TODO: should we have an explicit encoding?
                     contents = self.transform_text_i2b2(self.data_all_files[filename])
-                    #print("writing contents to: " + outpathfbase+".xml")
+                    print("writing contents to: " + outpathfbase+".xml")
                     f.write(contents)
             else:
                 raise Exception("Outformat not supported: ",
