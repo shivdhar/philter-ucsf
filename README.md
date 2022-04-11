@@ -29,6 +29,7 @@ To send a request:
 curl --request POST \
   --url http://localhost:8000/get_phi \
   --header 'content-type: application/json' \
+  --header 'format: i2b2' \
   --data '
 Record date: 2069-04-07
 
@@ -79,6 +80,9 @@ DV: 04/07/69
           Approved but not reviewed by Attending Provider         
 '
 ```
+
+The header `format` needs to be either of `i2b2` or `asterisk`.
+
 # Installing Requirements
 
 To install the Python requirements, run the following command:
